@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum EventCategory {
+  CONFERENCE
+  WORKSHOP
+  MEETUP
+  CONCERT
+  SPORTS
+  EXHIBITION
+  OTHER
+}
+
+model Event {
+  id          String        @id @default(uuid())
+  title       String        @db.VarChar(200)
+  description String        @db.Text
+  date        DateTime
+  location    String        @db.VarChar(300)
+  latitude    Float?
+  longitude   Float?
+  category    EventCategory @default(OTHER)
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime      @updatedAt      @map("updated_at")
+
+  @@index([category])
+  @@index([date])
+  @@map("events")
+}
