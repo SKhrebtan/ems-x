@@ -5,7 +5,7 @@ import {
 	NotFoundException,
 } from '@nestjs/common'
 import { PrismaService } from 'nestjs-prisma'
-import { MESSAGES } from '../shared/constants/messages'
+import { MESSAGES } from '../../shared/constants/messages'
 import { RECOMMENDATION_CONFIG } from './recommendations.constants'
 import type { ScoredEvent } from './recommendations.types'
 import { scoreSimilarity } from './recommendations.utils'

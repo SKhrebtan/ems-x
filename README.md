@@ -125,7 +125,7 @@ Each candidate gets a score in 0–100 across three signals; top 5 are returned.
 | Date proximity | 30 | linear over 30 days |
 | Location proximity | 20 | linear over 100 km (haversine) — only if both events have coords |
 
-All tuning lives in [recommendations.constants.ts](backend/src/recommendations/recommendations.constants.ts).
+All tuning lives in [recommendations.constants.ts](backend/src/modules/recommendations/recommendations.constants.ts).
 
 ---
 

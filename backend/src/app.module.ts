@@ -3,8 +3,8 @@ import { APP_GUARD } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { PrismaModule } from 'nestjs-prisma';
-import { EventsModule } from './events/events.module';
-import { RecommendationsModule } from './recommendations/recommendations.module';
+import { EventsModule } from './modules/events/events.module';
+import { RecommendationsModule } from './modules/recommendations/recommendations.module';
 
 @Module({
   imports: [

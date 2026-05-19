@@ -37,7 +37,7 @@ export const EVENTS_SWAGGER = {
 			summary:     'List events',
 			description:
 				'Returns a paginated, filterable, sortable list of events. ' +
-				'`search` matches title, description, and location (case-insensitive). ' +
+				'`search` matches title and location (case-insensitive). ' +
 				'`from`/`to` bound the event date inclusively. ' +
 				'Indexed on `category` and `date` for fast filter paths.',
 		},

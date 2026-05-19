@@ -33,7 +33,7 @@ In-depth notes that complement [README.md](README.md). The README explains *how 
 ### Why this stack?
 
 - **Next.js App Router** — co-locates routes, layouts, and route-level data fetching; server components remove the need for a separate "is this isomorphic" decision tree. Familiar to any modern React dev.
-- **NestJS** — opinionated module system maps cleanly to features (`events/`, `recommendations/`), DTOs + decorators give one place to define API contracts, and the request lifecycle (pipes → interceptors → guards → filter) is well-documented.
+- **NestJS** — opinionated module system maps cleanly to features (`modules/events/`, `modules/recommendations/`), DTOs + decorators give one place to define API contracts, and the request lifecycle (pipes → interceptors → guards → filter) is well-documented.
 - **Prisma over TypeORM** — schema-first DX, type-safe client, painless migrations. Beats writing decorators on entity classes when the model is this simple.
 - **Postgres** — well-supported by Prisma, gives us indexes/JSON/full-text if the project grows.
 - **TanStack Query** — caches, dedupes, and invalidates on its own; eliminates ~80% of the manual `useEffect + useState` plumbing that "vanilla" React data fetching needs.
@@ -58,20 +58,21 @@ backend/src/
 ├── app.module.ts                       # ThrottlerModule + ThrottlerGuard via APP_GUARD
 ├── main.ts                             # checkEnv → helmet → CORS → pipes/filters/interceptors → Swagger
 ├── env.ts                              # checkEnv() — fail-fast env validation (+ dotenv side-effect)
-├── events/
-│   ├── dto/                            # Create/Update/Query DTOs with @ApiProperty
-│   ├── events.controller.ts            # routes from EVENTS_ROUTES, swagger from EVENTS_SWAGGER
-│   ├── events.service.ts               # public/private, try/catch, MESSAGES.ERROR.*
-│   ├── events.module.ts
-│   ├── events.types.ts                 # PaginatedEvents, DeleteEventResult
-│   ├── events.constants.ts             # EVENTS_ROUTES, EVENTS_SWAGGER, SIMILAR_THROTTLE
-│   └── events.utils.ts                 # buildEventsWhereClause, buildEventsOrderBy
-├── recommendations/
-│   ├── recommendations.constants.ts    # RECOMMENDATION_CONFIG (weights + horizons)
-│   ├── recommendations.utils.ts        # pure: haversineKm + scoreSimilarity
-│   ├── recommendations.service.ts
-│   ├── recommendations.module.ts
-│   └── recommendations.types.ts        # ScoredEvent
+├── modules/
+│   ├── events/
+│   │   ├── dto/                        # Create/Update/Query DTOs with @ApiProperty
+│   │   ├── events.controller.ts        # routes from EVENTS_ROUTES, swagger from EVENTS_SWAGGER
+│   │   ├── events.service.ts           # public/private, try/catch, MESSAGES.ERROR.*
+│   │   ├── events.module.ts
+│   │   ├── events.types.ts             # PaginatedEvents, DeleteEventResult
+│   │   ├── events.constants.ts         # EVENTS_ROUTES, EVENTS_SWAGGER, SIMILAR_THROTTLE
+│   │   └── events.utils.ts             # buildEventsWhereClause, buildEventsOrderBy
+│   └── recommendations/
+│       ├── recommendations.constants.ts # RECOMMENDATION_CONFIG (weights + horizons)
+│       ├── recommendations.utils.ts    # pure: haversineKm + scoreSimilarity
+│       ├── recommendations.service.ts
+│       ├── recommendations.module.ts
+│       └── recommendations.types.ts    # ScoredEvent
 └── shared/
     ├── constants/                      # messages.ts (single source for all strings)
     ├── utils/                          # AllExceptionsFilter (exception-filter.util.ts)
@@ -128,7 +129,7 @@ score(target, candidate) =
 | Date proximity | **30** | Linear over a 30-day horizon |
 | Location proximity | **20** | Linear over a 100 km horizon (haversine) |
 
-All knobs live in one object — [backend/src/recommendations/recommendations.constants.ts](backend/src/recommendations/recommendations.constants.ts):
+All knobs live in one object — [backend/src/modules/recommendations/recommendations.constants.ts](backend/src/modules/recommendations/recommendations.constants.ts):
 
 ```ts
 export const RECOMMENDATION_CONFIG = {
@@ -255,7 +256,7 @@ That cuts the candidate set by a factor of 10–100 before scoring. The scoring 
 ### Folder structure: kind-folders, not type-folders
 
 **Choice**: `shared/{components,hooks,services,types,utils,constants,styles}` plus `store/` for Zustand. Each component owns its folder with sibling `.styles.ts`, `.types.ts`, `.utils.ts`.
-**Why**: Locating code by *what it is* (a hook, a service) is faster than by *what feature it serves* at this size. When a feature grows, its module folder (e.g. `events/`) keeps everything that's not reusable. This is the same structure on the user's other projects, so context-switching cost is zero.
+**Why**: Locating code by *what it is* (a hook, a service) is faster than by *what feature it serves* at this size. When a feature grows, its module folder (e.g. `modules/events/`) keeps everything that's not reusable. This is the same structure on the user's other projects, so context-switching cost is zero.
 
 ---
 

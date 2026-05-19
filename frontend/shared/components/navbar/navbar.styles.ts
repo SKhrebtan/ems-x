@@ -11,4 +11,16 @@ export const styles = {
 		fontWeight: 700,
 		color: 'inherit',
 	} satisfies SxProps<Theme>,
+	navButton: {
+		color: 'text.primary',
+		fontWeight: 500,
+	} satisfies SxProps<Theme>,
+	navButtonActive: {
+		color: 'primary.main',
+		fontWeight: 700,
+		bgcolor: 'action.selected',
+		'&:hover': {
+			bgcolor: 'action.selected',
+		},
+	} satisfies SxProps<Theme>,
 } as const

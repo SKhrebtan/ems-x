@@ -38,7 +38,7 @@ export const EventFilters = ({ value, onChange, }: EventFiltersProps,) => {
 					fullWidth
 					value={value.search}
 					onChange={(e,) => update('search', e.target.value,)}
-					placeholder='Title, description, or location'
+					placeholder='Title or location'
 				/>
 				<TextField
 					select

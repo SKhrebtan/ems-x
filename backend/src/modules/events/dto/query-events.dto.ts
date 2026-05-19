@@ -43,7 +43,7 @@ export class QueryEventsDto {
   to?: string;
 
   @ApiPropertyOptional({
-    description: 'Case-insensitive substring match against title, description, and location.',
+    description: 'Case-insensitive substring match against title and location.',
     example: 'workshop',
   })
   @IsOptional()

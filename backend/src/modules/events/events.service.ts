@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common'
 import type { Event, Prisma } from '@prisma/client'
 import { PrismaService } from 'nestjs-prisma'
-import { MESSAGES } from '../shared/constants/messages'
+import { MESSAGES } from '../../shared/constants/messages'
 import { CreateEventDto } from './dto/create-event.dto'
 import { UpdateEventDto } from './dto/update-event.dto'
 import { QueryEventsDto } from './dto/query-events.dto'
